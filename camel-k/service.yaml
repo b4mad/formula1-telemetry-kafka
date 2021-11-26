@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: telemetry-ingress
+spec:
+  selector:
+    camel.apache.org/integration: ingress
+  externalTrafficPolicy: Cluster
+  sessionAffinity: None
+  type: NodePort
+  ports:
+    - protocol: UDP
+      port: 10666
+      targetPort: 10666
+      nodePort: 30666
