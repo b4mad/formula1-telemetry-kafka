@@ -32,6 +32,8 @@
       <maven-assembly-plugin.version>3.3.0</maven-assembly-plugin.version>
       <jib-maven-plugin.version>2.6.0</jib-maven-plugin.version>
       <vertx.version>4.0.0</vertx.version>
+      <sonar.organization>b4mad</sonar.organization>
+      <sonar.host.url>https://sonarcloud.io</sonar.host.url>
   </properties>
 
   <dependencyManagement>
