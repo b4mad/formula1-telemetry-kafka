@@ -23,10 +23,11 @@ public class Decoder<TParsed> extends MessageToMessageDecoder<DatagramPacket> {
 
 
     @Override
-    protected void decode(ChannelHandlerContext channelHandlerContext, DatagramPacket datagramPacket, List<Object> list) throws Exception {
+    protected void decode(ChannelHandlerContext channelHandlerContext, DatagramPacket datagramPacket, List<Object> list) {
         ByteBuf buffer = datagramPacket.content();
 
         TParsed packet = packetParser.parse(buffer);
+
         list.add(packet);
     }
 }

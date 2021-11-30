@@ -17,7 +17,7 @@
       <module>streams-avg-speed</module>
       <module>webui</module>
       <module>streams-laps</module>
-      <module>camel-k</module>
+      <module>pc2-decoder</module>
   </modules>
 
   <properties>

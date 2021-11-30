@@ -3,8 +3,7 @@
  */
 package io.ppatierno.formula1.pc2;
 
-import io.ppatierno.formula1.pc2.helpers.IntegerParser;
-
+import java.nio.ByteBuffer;
 import java.util.Date;
 
 /**
@@ -25,6 +24,20 @@ public class BasePacket {
 
 	public BasePacket() {}
 
+	protected void ReadData(ByteBuffer data) {
+		ReadData(data, new Date());
+	}
+
+	private void ReadData(ByteBuffer byteBuffer, Date receivedDate) {
+		packetNumber = byteBuffer.getInt();
+		categoryPacketNumber = byteBuffer.getInt();
+		partialPacketIndex = byteBuffer.get();
+		partialPacketNumber = byteBuffer.get();
+		packetType = PacketTypes.values()[byteBuffer.get()];
+		packetVersion = byteBuffer.get();
+		this.receivedDate = receivedDate;
+	}
+
 	public BasePacket(byte[] data) {
 		this(data, new Date());
 	}
@@ -36,13 +49,9 @@ public class BasePacket {
 		if (data.length < 12) {
 			throw new IllegalArgumentException("given data array is too short to be read as BasePacket");
 		}
-		packetNumber = IntegerParser.parse(data, 0);
-		categoryPacketNumber = IntegerParser.parse(data, 4);
-		partialPacketIndex = data[8];
-		partialPacketNumber = data[9];
-		packetType = PacketTypes.values()[data[10]];
-		packetVersion = data[11];
-		this.receivedDate = receivedDate;
+		var byteBuffer = ByteBuffer.wrap(data);
+
+		ReadData(byteBuffer, receivedDate);
 	}
 
 	public int getPacketNumber() {

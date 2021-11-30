@@ -1,4 +1,4 @@
-/**
+/*
  * Packet types definition (based on code from https://github.com/ralfhergert/pc2-telemetry)
  */
 

@@ -15,15 +15,14 @@ public class Ingress extends RouteBuilder {
     }
 
     @Override
-    public void configure() throws Exception {
+    public void configure() {
 
         String connString = String.format(
-            "netty:udp://0.0.0.0:%d?decoders=#packet-decoder&disconnectOnNoReply=false&sync=false",
+            "netty:udp://0.0.0.0:%d?decoders=#packet-decoder&sync=false",
             this.config.getUdpPort());
 
         from(connString)
             .log("Raw Packet: ${body}")
-            .to("direct:raw-packets")
-            .routeId("udp-dispatcher");
+             .routeId("udp-dispatcher");
     }
 }

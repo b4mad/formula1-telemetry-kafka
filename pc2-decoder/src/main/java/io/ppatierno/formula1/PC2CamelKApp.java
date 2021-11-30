@@ -29,18 +29,15 @@ public class PC2CamelKApp {
 
         CountDownLatch latch = new CountDownLatch(1);
 
-        Runtime.getRuntime().addShutdownHook(new Thread() {
-            @Override
-            public void run() {
-                try {
-                    camelContext.close();
-                } catch (Exception e) {
-                    log.error("Error closing CamelContext", e);
-                } finally {
-                    latch.countDown();
-                }
+        Runtime.getRuntime().addShutdownHook(new Thread(() -> {
+            try {
+                camelContext.close();
+            } catch (Exception e) {
+                log.error("Error closing CamelContext", e);
+            } finally {
+                latch.countDown();
             }
-        });
+        }));
 
         try {
             camelContext.start();

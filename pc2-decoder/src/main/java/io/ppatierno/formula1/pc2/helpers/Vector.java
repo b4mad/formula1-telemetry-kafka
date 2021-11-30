@@ -1,4 +1,4 @@
-/**
+/*
  * Note: based on code from https://github.com/ralfhergert/pc2-telemetry
  */
 package io.ppatierno.formula1.pc2.helpers;
