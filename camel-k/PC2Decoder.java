@@ -18,7 +18,7 @@ import java.util.List;
  * This classes configures the routing for receiving and decoding
  * pc2 packets.
  */
-public class Ingress extends RouteBuilder {
+public class PC2Decoder extends RouteBuilder {
     @BindToRegistry("decoder")
     public ChannelHandler getDecoder() {
         return new Decoder();
