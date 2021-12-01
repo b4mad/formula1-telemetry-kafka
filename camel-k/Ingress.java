@@ -389,13 +389,23 @@ public class Ingress extends RouteBuilder {
     public static class PC2PacketParser {
 
         public BasePacket parse(ByteBuf byteBuffer) throws IllegalArgumentException {
-            byte[] packetData = byteBuffer.array();
-            BasePacket basePacket = new BasePacket(packetData);
+            try
+            {
+                byte[] packetData = new byte[byteBuffer.readableBytes()];
+                byteBuffer.duplicate().readBytes(packetData);
 
-            if (basePacket.getPacketType() == PacketTypes.CarPhysics && basePacket.getPacketVersion() == 3) {
-                return new CarPhysicsPacket(packetData);
-            } else {
-                return basePacket;
+                BasePacket basePacket = new BasePacket(packetData);
+
+                if (basePacket.getPacketType() == PacketTypes.CarPhysics && basePacket.getPacketVersion() == 3) {
+                    return new CarPhysicsPacket(packetData);
+                } else {
+                    return basePacket;
+                }
+            }
+            catch(Exception ex)
+            {
+                ex.printStackTrace();
+                return null;
             }
         }
     }
