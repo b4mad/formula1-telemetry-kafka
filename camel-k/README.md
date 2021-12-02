@@ -12,8 +12,11 @@ To open the port to external clients a service listening on port 30666 is instal
 
 ```
 oc apply -f service.yaml
-kamel run --name ingress Ingress.java Decoder.java --dev --pod-template template.yaml
 ```
+
+Note: This folder contains two versions of the PC2 packet decoder. 
+1. `PC2DecoderStandAlone.java` contains all of the classes for decoding in a single file. In order to run this file, just do `kamel run --name ingress PC2DecoderStandAlone.java --dev --pod-template template.yaml`
+2. `Ingress.java` provides a much more maintainable version of the PC2 decoder in that it utilizes the `pc2-decoder` module. The `Ingress.java` file simply defines the route and delegates decoding to the `PC2PacketParser` defined in the `pcs-decoder` module. In order to deploy this version of the decoder, you need to include the `pc2-decoder` module as a dependency for `kamel`. Unfortunately, at the moment, camel-k doesn't work with local jars. Therefore, you either have to push the pcs-converter jar to maven central or configure the maven settings according to https://camel.apache.org/camel-k/1.7.x/configuration/maven.html. Once the configuration is completed, run `kamel run -d mvn:io.ppatierno:f1-telemetry-pc2-decoder:1.0 --name ingress Ingress.java --dev --pod-template template.yaml`
 
 Send a UDP packet to the integration
 
